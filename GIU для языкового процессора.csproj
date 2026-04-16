@@ -66,6 +66,8 @@
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Lexem.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="SyntaxError.cs" />
     <Compile Include="resources\Language.Designer.cs" />
     <Compile Include="Scanner.cs" />
     <Page Include="AboutWindow.xaml">
@@ -141,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\play.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

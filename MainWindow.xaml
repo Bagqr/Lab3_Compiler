@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="GUI для языкового процессора" Height="381" Width="598"
+        Title="GUI для языкового процессора" Height="727" Width="1085"
         AllowDrop="True"
         PreviewDragOver="Window_PreviewDragOver"
         Drop="Window_Drop">
@@ -20,6 +20,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -97,6 +98,11 @@
                 <Button Name="paste" Width="50" Height="50" Click="paste_Click">
                     <Image Source="/resources/insert.png"/>
                 </Button>
+                <Separator/>
+                <Button Name="run" Width="50" Height="50" Click="Start_Click">
+                    <Image Source="/resources/play.png"/>
+                </Button>
+                <Separator/>
                 <Button Name="question" Width="50" Height="50" Click="questions_Click">
                     <Image Source="/resources/question.png"/>
                 </Button>
@@ -152,7 +158,19 @@
                 <DataGridTextColumn Header="Местоположение" Binding="{Binding Location}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <StatusBar Grid.Row="4" Grid.ColumnSpan="2" Background="LightGray" 
+        <DataGrid x:Name="ErrorDataGrid" Grid.Row="4" Grid.ColumnSpan="3" IsReadOnly="True"
+          AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+          RowBackground="LightCoral" AlternatingRowBackground="MistyRose" 
+          Height="150" VerticalAlignment="Center"
+          SelectionChanged="ErrorDataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Неверный фрагмент" Binding="{Binding ErrorFragment}" Width="*"/>
+                <DataGridTextColumn Header="Местоположение" Binding="{Binding Location}" Width="*"/>
+                <DataGridTextColumn Header="Описание ошибки" Binding="{Binding Description}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StatusBar Grid.Row="5" Grid.ColumnSpan="2" Background="LightGray" 
            Padding="5,2" VerticalAlignment="Bottom">
             <StatusBarItem>
                 <TextBlock x:Name="statusText" Text="Готово" />
@@ -164,6 +182,10 @@
             <Separator/>
             <StatusBarItem>
                 <TextBlock x:Name="fileInfo" Text="Символов: 0" />
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="errorCountText" Text="Ошибок: 0" />
             </StatusBarItem>
             <Separator/>
             <StatusBarItem HorizontalAlignment="Right">

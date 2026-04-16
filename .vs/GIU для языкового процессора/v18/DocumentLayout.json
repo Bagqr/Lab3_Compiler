@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|c:\\users\\\u0431\u043E\u0433\u0434\u0430\u043D\\documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u043B\u0430\u04313\\lab2_compiler-main\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\scanner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|solutionrelative:scanner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\lexem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|solutionrelative:lexem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|c:\\users\\\u0431\u043E\u0433\u0434\u0430\u043D\\documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u043B\u0430\u04313\\lab2_compiler-main\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|solutionrelative:parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\resources\\language.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
-      "RelativeMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|solutionrelative:resources\\language.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+      "AbsoluteMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\syntaxerror.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B45AC25-54E7-432E-8D51-1FABE15002D6}|GIU \u0434\u043B\u044F \u044F\u0437\u044B\u043A\u043E\u0432\u043E\u0433\u043E \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u043E\u0440\u0430.csproj|solutionrelative:syntaxerror.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -64,7 +60,7 @@
         },
         {
           "DockedWidth": 272,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -72,47 +68,53 @@
             },
             {
               "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Parser.cs",
+              "DocumentMoniker": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\Parser.cs",
+              "RelativeDocumentMoniker": "Parser.cs",
+              "ToolTip": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\Parser.cs",
+              "RelativeToolTip": "Parser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-15T06:41:28.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "SyntaxError.cs",
+              "DocumentMoniker": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\SyntaxError.cs",
+              "RelativeDocumentMoniker": "SyntaxError.cs",
+              "ToolTip": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\SyntaxError.cs",
+              "RelativeToolTip": "SyntaxError.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-15T06:28:12.776Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAP8CAAAAAAAAAAAgwB4DAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAmwCkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T07:18:49.47Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Scanner.cs",
-              "DocumentMoniker": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\Scanner.cs",
-              "RelativeDocumentMoniker": "Scanner.cs",
-              "ToolTip": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\Scanner.cs",
-              "RelativeToolTip": "Scanner.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAAwEMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T07:17:37.073Z"
+              "WhenOpened": "2026-04-07T07:18:49.47Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Lexem.cs",
-              "DocumentMoniker": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\Lexem.cs",
-              "RelativeDocumentMoniker": "Lexem.cs",
-              "ToolTip": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\Lexem.cs",
-              "RelativeToolTip": "Lexem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T07:16:56.064Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -121,17 +123,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-04-07T07:18:05.586Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Language.resx",
-              "DocumentMoniker": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\resources\\Language.resx",
-              "RelativeDocumentMoniker": "resources\\Language.resx",
-              "ToolTip": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\resources\\Language.resx",
-              "RelativeToolTip": "resources\\Language.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-04-07T12:11:25.828Z"
             }
           ]
         }

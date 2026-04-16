@@ -79,6 +79,8 @@ namespace WpfApp1
 
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private ObservableCollection<SyntaxError> _syntaxErrors = new ObservableCollection<SyntaxError>();
+
         private static double _currentFontSize = 12;
 
         public ObservableCollection<EditorTab> Tabs { get; } = new ObservableCollection<EditorTab>();
@@ -118,6 +120,8 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            ErrorDataGrid.ItemsSource = _syntaxErrors;
+
             this.DataContext = this;
 
             Tabs.Add(new EditorTab());
@@ -783,9 +787,27 @@ namespace WpfApp1
         {
             if (SelectedTab == null) return;
             string sourceCode = SelectedTab.Document.Text;
+
             var scanner = new Scanner();
             List<Lexem> lexems = scanner.Analyze(sourceCode);
-            DataGrid1.ItemsSource = lexems; 
+            DataGrid1.ItemsSource = lexems;
+
+            var parser = new Parser();
+            List<SyntaxError> errors = parser.Parse(lexems);
+
+            _syntaxErrors.Clear();
+            foreach (var err in errors)
+                _syntaxErrors.Add(err);
+
+            errorCountText.Text = $"Ошибок: {errors.Count}";
+            if (errors.Count == 0)
+            {
+                statusText.Text = "Синтаксических ошибок не обнаружено";
+            }
+            else
+            {
+                statusText.Text = $"Найдено синтаксических ошибок: {errors.Count}";
+            }
         }
         private void DataGrid1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -798,6 +820,21 @@ namespace WpfApp1
                     int offset = document.GetOffset(lexem.Line, lexem.StartPos);
                     editor.Select(offset, 0);
                     editor.ScrollToLine(lexem.Line);
+                    editor.Focus();
+                }
+            }
+        }
+        private void ErrorDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ErrorDataGrid.SelectedItem is SyntaxError error && error.Line > 0 && error.Column > 0)
+            {
+                var editor = GetCurrentEditor();
+                if (editor != null && SelectedTab != null)
+                {
+                    var document = SelectedTab.Document;
+                    int offset = document.GetOffset(error.Line, error.Column);
+                    editor.Select(offset, 0);
+                    editor.ScrollToLine(error.Line);
                     editor.Focus();
                 }
             }
