@@ -82,7 +82,7 @@
               "RelativeDocumentMoniker": "Parser.cs",
               "ToolTip": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\Parser.cs",
               "RelativeToolTip": "Parser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-15T06:41:28.147Z",
               "EditorCaption": ""
@@ -109,8 +109,7 @@
               "RelativeToolTip": "MainWindow.xaml.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAmwCkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T07:18:49.47Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-07T07:18:49.47Z"
             },
             {
               "$type": "Document",
@@ -121,8 +120,7 @@
               "ToolTip": "C:\\Users\\\u0411\u043E\u0433\u0434\u0430\u043D\\Documents\\\u0443\u0447\u0451\u0431\u0430\\6 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\\u0442\u0435\u043E\u0440\u0438\u044F \u043A\u043E\u043C\u043F\u0438\u043B\u044F\u0442\u043E\u0440\u043E\u0432\\\u041B\u0430\u04313\\Lab2_Compiler-main\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-07T07:18:05.586Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-07T07:18:05.586Z"
             }
           ]
         }
