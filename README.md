@@ -72,7 +72,7 @@
 <id>           → <letter> { <letter> | <digit> }
 <num>          → <digit> { <digit> }
 <range_call>   → 'range' '(' <num> ')'
-<block>        → 'print' '(' <id> ');' | 'print' '(' <num> ');' 
+<block>        → 'print' '(' <id> ');'
 <letter>       → 'a'|...|'z'|'A'|...|'Z'|'_'
 <digit>        → '0'|...|'9'
 ```
