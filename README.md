@@ -67,15 +67,20 @@
 ### ```V_t = { for, in, range, print, :, ;, (, ), 0...9, a...Z}```
 ### ```V_n = { <program>, <id>, <num>, <range_call>, <block>, <letter>, <digit>} ```
 ### P:
+
 ```
-<program>      → 'for' <id> 'in' <range_call> ':' <block>
-<id>           → <letter> { <letter> | <digit> }
-<num>          → <digit> { <digit> }
-<range_call>   → 'range' '(' <num> ')'
-<block>        → 'print' '(' <id> ');'
-<letter>       → 'a'|...|'z'|'A'|...|'Z'|'_'
-<digit>        → '0'|...|'9'
+<program> -> 'for' <for_start>
+<for_start> -> <id> 'in' <range_call>
+<range_call> -> 'range' '(' <num> ')' ':' <block>
+<block> -> 'print' '(' <id> ')'
+
+<id> -> <letter> <id_more>
+<id_more> -> <letter> | <digit> | epsilon
+
+<num> -> <digit> <num_more>
+<num_more> -> <digit> | epsilon
 ```
+
 ### ```Z = {<block>}```
 
 ## Классификация грамматики (по Хомскому)
@@ -98,6 +103,10 @@
 ## Метод анализа (алгоритм синтаксического анализа - граф автоматной грамматики или рекурсивный спуск).
 
 В данной работе реализован синтаксический анализатор (парсер), построенный на основе метода рекурсивного спуска. Функции вызывают друг друга рекурсивно в соответствии с правилами грамматики, имитируя левый вывод.
+
+Схема рекурсивного спуска:
+
+<img width="591" height="586" alt="Диаграмма без названия drawio" src="https://github.com/user-attachments/assets/fde1e79e-b782-4ee2-b920-09124933d48c" />
 
 ### Особенности реализации:
 
