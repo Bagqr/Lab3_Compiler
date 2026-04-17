@@ -121,23 +121,26 @@ for i in range(10):
 
 ## Строка без аргумента в функции range()
 for i in range():
+	print(i);
 
-<img width="1877" height="1253" alt="image" src="https://github.com/user-attachments/assets/caf0fbd4-a712-4e04-84b3-ad94638c3ab0" />
+<img width="1869" height="1249" alt="image" src="https://github.com/user-attachments/assets/5d33332e-3204-4bca-bdc5-7b36d59896dc" />
 
 ## Строка без ожидаемого терминала in
-for i range(5)
+for i range(5):
+	print (id);
 
-<img width="1875" height="1255" alt="image" src="https://github.com/user-attachments/assets/5576c223-927f-4001-aefe-b3154ffa23cf" />
-
+<img width="1870" height="1253" alt="image" src="https://github.com/user-attachments/assets/3214208f-ccc7-43b4-b2ec-586d0a46b5aa" />
+	
 ## Строки с несколькими ошибками
-for i range(5) print i
+for i in range(in):
+	id
+	
+<img width="1879" height="1249" alt="image" src="https://github.com/user-attachments/assets/3e4eef7e-16ed-446e-b8e1-67be94289ff9" />
 
-<img width="1866" height="1239" alt="image" src="https://github.com/user-attachments/assets/7ce07e62-420d-43e2-b9ce-cfbcd5aeaa40" />
-
-for i in range (): 
-	print (10)
+for i in range () 
+	print (10);
   
-<img width="1868" height="1248" alt="image" src="https://github.com/user-attachments/assets/e7536e90-1e80-4d65-8357-99bd3c9f7c0e" />
+<img width="1871" height="1248" alt="image" src="https://github.com/user-attachments/assets/556763ae-218c-414d-a367-c581259f319e" />
 
 ## Строка с одним символом ";"
 
