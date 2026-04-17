@@ -64,23 +64,32 @@
 ## Разработка грамматики
 
 Грамматика - G = {V_t, V_n, P, Z}
-### ```V_t = { for, in, range, print, id, num, :, ;, (, )}```
-### ```V_n = { <program>, <for>, <range>, <print>, <expr>, <block>} ```
+### ```V_t = { for, in, range, print, :, ;, (, ), 0...9, a...Z}```
+### ```V_n = { <program>, <id>, <num>, <range_call>, <block>, <letter>, <digit>} ```
 ### P:
 ```
-1) <program> -> <for>
-2) <for> -> 'for' 'id' 'in' <range> ':' <block>
-3) <range> -> '(' <expr> ')'
-4) <block> -> <print> | <for> |
-5) <print> -> 'print' '(' <expr> ')' ';'
-6) <expr> ->  num | id
+<program>      → 'for' <id> 'in' <range_call> ':' <block>
+<id>           → <letter> { <letter> | <digit> }
+<num>          → <digit> { <digit> }
+<range_call>   → 'range' '(' <num> ')'
+<block>        → 'print' '(' <id> ');' | 'print' '(' <num> ');' 
+<letter>       → 'a'|...|'z'|'A'|...|'Z'|'_'
+<digit>        → '0'|...|'9'
 ```
-### ```Z = {<print>}```
+### ```Z = {<block>}```
 
 ## Классификация грамматики (по Хомскому)
 
-Моя грамматика является контекстно-свободной
-  Обоснование:
+Моя грамматика является контекстно-свободной.
+В учебнике приводится формула:
+
+<img width="355" height="67" alt="image" src="https://github.com/user-attachments/assets/bc6bfb5b-21e2-4365-a729-870ffd9848f6" />
+
+И пример:
+
+<img width="148" height="171" alt="image" src="https://github.com/user-attachments/assets/f1cb3d4a-343d-4607-9860-4fd769ff0b18" />
+
+  Обоснование почему моя грамматика - КС:
 - Левая часть каждого правила — один нетерминал 
 - Правая часть может содержать любую последовательность терминалов и нетерминалов, без ограничений на контекст.
 - Грамматика не является регулярной, так как в правых частях встречается более одного нетерминала и терминалы не только в начале/конце.
