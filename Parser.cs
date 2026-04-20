@@ -7,6 +7,7 @@ namespace WpfApp1
         private List<Lexem> _tokens;
         private int _position;
         private List<SyntaxError> _errors;
+        private bool _failed;
 
         private const int TOKEN_FOR = 1;
         private const int TOKEN_IN = 2;
@@ -26,120 +27,84 @@ namespace WpfApp1
             _tokens = tokens;
             _position = 0;
             _errors = new List<SyntaxError>();
+            _failed = false;
+
             SkipWhitespace();
-            Program();
+
+            if (!Match(TOKEN_FOR, "for", critical: true))
+                return _errors;
+
+            ForBody();
+
+            while (Current() != null)
+            {
+                AddError(Current(), "Лишние символы после завершения программы");
+                Next();
+            }
+
             return _errors;
         }
 
-        private void Program()
+        private void ForBody()
+        {
+            if (!Match(TOKEN_ID, "идентификатор"))
+                SkipTo(TOKEN_IN, TOKEN_RANGE, TOKEN_COLON, TOKEN_PRINT);
+
+            if (!Match(TOKEN_IN, "in"))
+                SkipTo(TOKEN_RANGE, TOKEN_COLON, TOKEN_PRINT);
+
+            RangeCall();
+
+            if (!Match(TOKEN_COLON, ":"))
+                SkipTo(TOKEN_PRINT);
+
+            Block();
+        }
+
+        private void RangeCall()
+        {
+            if (!Match(TOKEN_RANGE, "range"))
+                SkipTo(TOKEN_LPAREN, TOKEN_COLON, TOKEN_PRINT);
+
+            if (!Match(TOKEN_LPAREN, "("))
+                SkipTo(TOKEN_NUM, TOKEN_RPAREN, TOKEN_COLON, TOKEN_PRINT);
+
+            if (CurrentCode() == TOKEN_NUM)
+                Next();
+            else
+                AddError(Current(), "Ожидалось целое число");
+
+            Match(TOKEN_RPAREN, ")");
+        }
+
+        private void Block()
+        {
+            if (!Match(TOKEN_PRINT, "print"))
+                SkipTo(TOKEN_LPAREN, TOKEN_SEMICOLON);
+
+            if (!Match(TOKEN_LPAREN, "("))
+                SkipTo(TOKEN_ID, TOKEN_RPAREN, TOKEN_SEMICOLON);
+
+            if (CurrentCode() == TOKEN_ID)
+                Next();
+            else
+                AddError(Current(), "Ожидался идентификатор");
+
+            if (!Match(TOKEN_RPAREN, ")"))
+                SkipTo(TOKEN_SEMICOLON);
+
+            Match(TOKEN_SEMICOLON, ";");
+        }
+
+        private void SkipTo(params int[] syncTokens)
         {
             while (Current() != null)
             {
-                int oldPos = _position; 
-                if (!ForStmt())
-                {
-                    SkipToSync(TOKEN_FOR, TOKEN_PRINT);
-                    if (_position == oldPos && Current() != null)
-                        Next();
-                }
-                SkipWhitespace();
-            }
-        }
-
-        private bool ForStmt()
-        {
-            if (!Match(TOKEN_FOR, "for")) return false;
-
-            if (!Match(TOKEN_ID, "идентификатор"))
-            {
-                SkipToSync(TOKEN_FOR, TOKEN_PRINT);
-                return true;
-            }
-
-            if (!Match(TOKEN_IN, "in"))
-            {
-                SkipToSync(TOKEN_FOR, TOKEN_PRINT);
-                return true;
-            }
-
-            if (!RangeCall())
-            {
-                SkipToSync(TOKEN_COLON, TOKEN_FOR, TOKEN_PRINT);
-                if (CurrentCode() != TOKEN_COLON) return true;
-            }
-
-            if (!Match(TOKEN_COLON, ":"))
-            {
-                SkipToSync(TOKEN_FOR, TOKEN_PRINT);
-                return true;
-            }
-
-            if (!Block())
-                SkipToSync(TOKEN_FOR, TOKEN_PRINT);
-
-            return true;
-        }
-
-        private bool RangeCall()
-        {
-            if (!Match(TOKEN_RANGE, "range")) return false;
-            if (!Match(TOKEN_LPAREN, "(")) return false;
-
-            bool exprOk = Expr();
-            if (!exprOk)
-                SkipToSync(TOKEN_RPAREN, TOKEN_FOR, TOKEN_PRINT);
-
-            if (!Match(TOKEN_RPAREN, ")")) return false;
-            return true;
-        }
-
-        private bool Expr()
-        {
-            if (CurrentCode() == TOKEN_NUM || CurrentCode() == TOKEN_ID)
-            {
-                Next();
-                return true;
-            }
-            AddError(Current(), "Ожидалось целое число или идентификатор");
-            return false;
-        }
-
-        private bool PrintCall()
-        {
-            if (!Match(TOKEN_PRINT, "print")) return false;
-            if (!Match(TOKEN_LPAREN, "(")) return false;
-
-            bool exprOk = Expr();
-            if (!exprOk)
-                SkipToSync(TOKEN_RPAREN, TOKEN_FOR, TOKEN_PRINT);
-
-            if (!Match(TOKEN_RPAREN, ")")) return false;
-            if (CurrentCode() == TOKEN_SEMICOLON) Next();
-            return true;
-        }
-
-        private bool Block()
-        {
-            bool hasAny = false;
-            while (true)
-            {
-                SkipWhitespace();
                 int code = CurrentCode();
-                if (code == TOKEN_PRINT)
-                {
-                    if (!PrintCall())
-                        SkipToSync(TOKEN_PRINT, TOKEN_FOR);
-                    hasAny = true;
-                }
-                else if (code == TOKEN_FOR)
-                {
-                    if (!ForStmt())
-                        SkipToSync(TOKEN_PRINT, TOKEN_FOR);
-                    hasAny = true;
-                }
-                else break;
+                foreach (int t in syncTokens)
+                    if (code == t) return;
+                Next();
             }
-            return hasAny;
         }
 
         private Lexem Current() => _position < _tokens.Count ? _tokens[_position] : null;
@@ -156,50 +121,61 @@ namespace WpfApp1
             while (_position < _tokens.Count)
             {
                 int c = _tokens[_position].Code;
-                if (c == TOKEN_WHITESPACE || c == TOKEN_NEWLINE) _position++;
-                else break;
+                if (c == TOKEN_WHITESPACE || c == TOKEN_NEWLINE)
+                    _position++;
+                else
+                    break;
             }
         }
 
-        private bool Match(int expectedCode, string expectedDesc)
+        private bool Match(int expectedCode, string expectedDesc, bool critical = false)
         {
+            if (_failed) return false;
+
             var cur = Current();
-            if (cur != null && cur.Code == expectedCode)
+            if (cur == null)
+            {
+                AddError(null, $"Ожидалось '{expectedDesc}', найдено конец файла");
+                if (critical) _failed = true;
+                return false;
+            }
+
+            if (cur.Code == expectedCode)
             {
                 Next();
                 return true;
             }
-            string found = cur != null ? $"{cur.Value} ({cur.Type})" : "конец файла";
-            AddError(cur, $"Ожидалось '{expectedDesc}', найдено {found}");
+
+            AddError(cur, $"Ожидалось '{expectedDesc}', найдено {cur.Value} ({cur.Type})");
+
+            if (critical)
+                _failed = true;
+
             return false;
+
+         
         }
 
         private void AddError(Lexem token, string description)
         {
             if (token == null)
-                _errors.Add(new SyntaxError { ErrorFragment = "EOF", Location = "конец файла", Description = description, Line = -1, Column = -1 });
+                _errors.Add(new SyntaxError
+                {
+                    ErrorFragment = "EOF",
+                    Location = "конец файла",
+                    Description = description,
+                    Line = -1,
+                    Column = -1
+                });
             else
-                _errors.Add(new SyntaxError { ErrorFragment = token.Value, Location = $"строка {token.Line}, позиция {token.StartPos}", Description = description, Line = token.Line, Column = token.StartPos });
-        }
-
-        private void SkipToSync(params int[] syncTokens)
-        {
-            if (_position < _tokens.Count)
-            {
-                int cur = CurrentCode();
-                foreach (int s in syncTokens)
-                    if (cur == s) { Next(); return; }
-                if (cur == TOKEN_FOR || cur == TOKEN_PRINT) { Next(); return; }
-            }
-
-            while (_position < _tokens.Count)
-            {
-                int c = CurrentCode();
-                foreach (int s in syncTokens)
-                    if (c == s) return;
-                if (c == TOKEN_FOR || c == TOKEN_PRINT) return;
-                Next();
-            }
+                _errors.Add(new SyntaxError
+                {
+                    ErrorFragment = token.Value,
+                    Location = $"строка {token.Line}, позиция {token.StartPos}",
+                    Description = description,
+                    Line = token.Line,
+                    Column = token.StartPos
+                });
         }
     }
 }
