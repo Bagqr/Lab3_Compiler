@@ -218,14 +218,20 @@ namespace WpfApp1
 
             if (state == State.ExpectRange)
             {
-                if (_current != null)
+                if (_current != null && _current.Code == TOKEN_LPAREN)
                 {
                     GetNextToken();
-                    state = State.ExpectLParen;
+                    state = State.ExpectNumber;
                 }
                 else
                 {
-                    state = State.Accept;
+                    if (_current != null)
+                        GetNextToken();
+                    while (_current != null && _current.Code != TOKEN_LPAREN)
+                        GetNextToken();
+                    if (_current != null && _current.Code == TOKEN_LPAREN)
+                        GetNextToken();
+                    state = State.ExpectNumber;
                 }
                 return;
             }
