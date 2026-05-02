@@ -1,15 +1,32 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WpfApp1
 {
     public class Parser
     {
+        private enum State
+        {
+            ExpectFor,        
+            ExpectId,        
+            ExpectIn,           
+            ExpectRange,       
+            ExpectLParen,      
+            ExpectNumber,       
+            ExpectRParen,       
+            ExpectColon,        
+            ExpectPrint,        
+            ExpectLParenPrint,  
+            ExpectIdPrint,      
+            ExpectRParenPrint, 
+            ExpectSemicolon,    
+            Accept              
+        }
+
         private List<Lexem> _tokens;
         private int _position;
+        private Lexem _current;
         private List<SyntaxError> _errors;
-
-        private bool _failed;      
-        private bool _reachedEnd;  
 
         private const int TOKEN_FOR = 1;
         private const int TOKEN_IN = 2;
@@ -23,211 +40,274 @@ namespace WpfApp1
         private const int TOKEN_RPAREN = 63;
         private const int TOKEN_WHITESPACE = 50;
         private const int TOKEN_NEWLINE = 51;
+        private const int TOKEN_ERROR = 90;
 
         public List<SyntaxError> Parse(List<Lexem> tokens)
         {
             _tokens = tokens;
             _position = 0;
             _errors = new List<SyntaxError>();
-            _failed = false;
-            _reachedEnd = false;
+            GetNextToken();
 
-            SkipWhitespace();
-
-            if (!Match(TOKEN_FOR, "for", critical: true))
-                return _errors;
-
-            ForBody();
-
-            if (_reachedEnd)
-                return _errors;
-
-            while (Current() != null)
+            if (_tokens.Count == 0)
             {
-                AddError(Current(), "Лишние символы после завершения программы");
-                Next();
+                AddError("", 1, 1, "ключевое слово 'for'", "конец строки", "Пустая строка");
+                return _errors;
+            }
+
+            State state = State.ExpectFor;
+            int safety = 0;
+
+            while (state != State.Accept && safety < 10000)
+            {
+                safety++;
+                if (MatchesState(state, _current))
+                {
+                    state = ConsumeToken(state);
+                    continue;
+                }
+
+                AddStateError(state, _current);
+                if (_current == null) break;
+                Recover(ref state);
+                if (_current == null) break;
+            }
+
+            if (_current != null)
+            {
+                AddError(_current.Value, _current.Line, _current.StartPos, "конец строки", _current.Value, "Лишние символы после завершения программы");
+                while (_current != null)
+                    GetNextToken();
             }
 
             return _errors;
         }
 
-        private void ForBody()
-        {
-            if (_failed || _reachedEnd) return;
-
-            if (!Match(TOKEN_ID, "идентификатор"))
-                SkipTo(TOKEN_IN, TOKEN_RANGE, TOKEN_COLON, TOKEN_PRINT);
-
-            if (_reachedEnd) return;
-
-            if (!Match(TOKEN_IN, "in"))
-                SkipTo(TOKEN_RANGE, TOKEN_COLON, TOKEN_PRINT);
-
-            if (_reachedEnd) return;
-
-            RangeCall();
-
-            if (_reachedEnd) return;
-
-            if (!Match(TOKEN_COLON, ":"))
-                SkipTo(TOKEN_PRINT);
-
-            if (_reachedEnd) return;
-
-            Block();
-        }
-
-        private void RangeCall()
-        {
-            if (_failed || _reachedEnd) return;
-
-            if (!Match(TOKEN_RANGE, "range"))
-                SkipTo(TOKEN_LPAREN, TOKEN_COLON, TOKEN_PRINT);
-
-            if (_reachedEnd) return;
-
-            if (!Match(TOKEN_LPAREN, "("))
-                SkipTo(TOKEN_NUM, TOKEN_RPAREN, TOKEN_COLON, TOKEN_PRINT);
-
-            if (_reachedEnd) return;
-
-            if (CurrentCode() == TOKEN_NUM)
-                Next();
-            else
-            {
-                AddError(Current(), "Ожидалось целое число");
-                SkipTo(TOKEN_RPAREN, TOKEN_COLON, TOKEN_PRINT);
-            }
-
-            if (_reachedEnd) return;
-
-            Match(TOKEN_RPAREN, ")");
-        }
-
-        private void Block()
-        {
-            if (_failed || _reachedEnd) return;
-
-            if (!Match(TOKEN_PRINT, "print"))
-                SkipTo(TOKEN_LPAREN, TOKEN_SEMICOLON);
-
-            if (_reachedEnd) return;
-
-            if (!Match(TOKEN_LPAREN, "("))
-                SkipTo(TOKEN_ID, TOKEN_RPAREN, TOKEN_SEMICOLON);
-
-            if (_reachedEnd) return;
-
-            if (CurrentCode() == TOKEN_ID)
-                Next();
-            else
-            {
-                AddError(Current(), "Ожидался идентификатор");
-                SkipTo(TOKEN_RPAREN, TOKEN_SEMICOLON);
-            }
-
-            if (_reachedEnd) return;
-
-            if (!Match(TOKEN_RPAREN, ")"))
-                SkipTo(TOKEN_SEMICOLON);
-
-            if (_reachedEnd) return;
-
-            Match(TOKEN_SEMICOLON, ";");
-        }
-
-        private void SkipTo(params int[] syncTokens)
-        {
-            while (Current() != null)
-            {
-                int code = CurrentCode();
-                foreach (int t in syncTokens)
-                    if (code == t) return;
-
-                Next();
-            }
-        }
-
-        private Lexem Current() => _position < _tokens.Count ? _tokens[_position] : null;
-        private int CurrentCode() => Current()?.Code ?? -1;
-
-        private void Next()
+        private void GetNextToken()
         {
             if (_position < _tokens.Count)
-                _position++;
-
-            SkipWhitespace();
+            {
+                _current = _tokens[_position++];
+                while (_current != null && (_current.Code == TOKEN_WHITESPACE || _current.Code == TOKEN_NEWLINE))
+                {
+                    if (_position < _tokens.Count)
+                        _current = _tokens[_position++];
+                    else
+                        _current = null;
+                }
+            }
+            else
+                _current = null;
         }
 
-        private void SkipWhitespace()
+        private bool MatchesState(State state, Lexem token)
         {
-            while (_position < _tokens.Count)
+            if (token == null)
+                return state == State.Accept;
+
+            if (token.Code == TOKEN_ERROR)
+                return false;
+
+            switch (state)
             {
-                int c = _tokens[_position].Code;
-                if (c == TOKEN_WHITESPACE || c == TOKEN_NEWLINE)
-                    _position++;
-                else
+                case State.ExpectFor: return token.Code == TOKEN_FOR;
+                case State.ExpectId: return token.Code == TOKEN_ID;
+                case State.ExpectIn: return token.Code == TOKEN_IN;
+                case State.ExpectRange: return token.Code == TOKEN_RANGE;
+                case State.ExpectLParen: return token.Code == TOKEN_LPAREN;
+                case State.ExpectNumber: return token.Code == TOKEN_NUM;
+                case State.ExpectRParen: return token.Code == TOKEN_RPAREN;
+                case State.ExpectColon: return token.Code == TOKEN_COLON;
+                case State.ExpectPrint: return token.Code == TOKEN_PRINT;
+                case State.ExpectLParenPrint: return token.Code == TOKEN_LPAREN;
+                case State.ExpectIdPrint: return token.Code == TOKEN_ID;
+                case State.ExpectRParenPrint: return token.Code == TOKEN_RPAREN;
+                case State.ExpectSemicolon: return token.Code == TOKEN_SEMICOLON;
+                case State.Accept: return token == null;
+                default: return false;
+            }
+        }
+
+        private State ConsumeToken(State state)
+        {
+            GetNextToken();
+            switch (state)
+            {
+                case State.ExpectFor: return State.ExpectId;
+                case State.ExpectId: return State.ExpectIn;
+                case State.ExpectIn: return State.ExpectRange;
+                case State.ExpectRange: return State.ExpectLParen;
+                case State.ExpectLParen: return State.ExpectNumber;
+                case State.ExpectNumber: return State.ExpectRParen;
+                case State.ExpectRParen: return State.ExpectColon;
+                case State.ExpectColon: return State.ExpectPrint;
+                case State.ExpectPrint: return State.ExpectLParenPrint;
+                case State.ExpectLParenPrint: return State.ExpectIdPrint;
+                case State.ExpectIdPrint: return State.ExpectRParenPrint;
+                case State.ExpectRParenPrint: return State.ExpectSemicolon;
+                case State.ExpectSemicolon: return State.Accept;
+                default: return State.Accept;
+            }
+        }
+
+        private void AddStateError(State state, Lexem token)
+        {
+            string found = token?.Value ?? "конец строки";
+            int line = token?.Line ?? 1;
+            int pos = token?.StartPos ?? 1;
+
+            switch (state)
+            {
+                case State.ExpectFor:
+                    AddError(found, line, pos, "'for'", found, "Программа должна начинаться с 'for'");
+                    break;
+                case State.ExpectId:
+                    AddError(found, line, pos, "идентификатор", found, "Ожидается идентификатор после 'for'");
+                    break;
+                case State.ExpectIn:
+                    AddError(found, line, pos, "'in'", found, "Ожидается 'in' после идентификатора");
+                    break;
+                case State.ExpectRange:
+                    AddError(found, line, pos, "'range'", found, "Ожидается 'range' после 'in'");
+                    break;
+                case State.ExpectLParen:
+                    AddError(found, line, pos, "'('", found, "Ожидается '(' после 'range'");
+                    break;
+                case State.ExpectNumber:
+                    AddError(found, line, pos, "целое число", found, "Ожидается число в скобках range");
+                    break;
+                case State.ExpectRParen:
+                    AddError(found, line, pos, "')'", found, "Ожидается ')' после числа");
+                    break;
+                case State.ExpectColon:
+                    AddError(found, line, pos, "':'", found, "Ожидается ':' после ')'");
+                    break;
+                case State.ExpectPrint:
+                    AddError(found, line, pos, "'print'", found, "Ожидается 'print' после ':'");
+                    break;
+                case State.ExpectLParenPrint:
+                    AddError(found, line, pos, "'('", found, "Ожидается '(' после 'print'");
+                    break;
+                case State.ExpectIdPrint:
+                    AddError(found, line, pos, "идентификатор", found, "Ожидается идентификатор внутри print");
+                    break;
+                case State.ExpectRParenPrint:
+                    AddError(found, line, pos, "')'", found, "Ожидается ')' после идентификатора в print");
+                    break;
+                case State.ExpectSemicolon:
+                    AddError(found, line, pos, "';'", found, "Ожидается ';' после ')'");
                     break;
             }
         }
 
-
-        private bool Match(int expectedCode, string expectedDesc, bool critical = false)
+        private void Recover(ref State state)
         {
-            if (_failed || _reachedEnd)
-                return false;
-
-            var cur = Current();
-
-            if (cur == null)
+            if (state == State.ExpectFor)
             {
-                if (!_reachedEnd)
+                if (_current != null)
                 {
-                    AddError(null, $"Ожидалось '{expectedDesc}', найдено конец файла");
-                    _reachedEnd = true;
+                    GetNextToken();
+                    state = State.ExpectId;
                 }
-
-                return false;
+                else
+                {
+                    state = State.Accept;
+                }
+                return;
             }
 
-            if (cur.Code == expectedCode)
+            if (state == State.ExpectRange)
             {
-                Next();
-                return true;
+                if (_current != null)
+                {
+                    GetNextToken();
+                    state = State.ExpectLParen;
+                }
+                else
+                {
+                    state = State.Accept;
+                }
+                return;
             }
 
-            AddError(cur, $"Ожидалось '{expectedDesc}', найдено {cur.Value} ({cur.Type})");
+            int[] syncTokens = GetSyncTokens(state);
+            while (_current != null && !syncTokens.Contains(_current.Code))
+            {
+                GetNextToken();
+            }
 
-            if (critical)
-                _failed = true;
-
-            return false;
+            if (_current != null)
+                state = DetermineStateAfterRecovery(state, _current.Code);
+            else
+                state = State.Accept;
         }
 
-        private void AddError(Lexem token, string description)
+        private int[] GetSyncTokens(State state)
         {
-            if (token == null)
+            switch (state)
             {
-                _errors.Add(new SyntaxError
-                {
-                    ErrorFragment = "EOF",
-                    Location = "конец файла",
-                    Description = description,
-                    Line = -1,
-                    Column = -1
-                });
+                case State.ExpectFor:
+                    return new int[] { TOKEN_FOR, TOKEN_ID, TOKEN_IN, TOKEN_RANGE, TOKEN_PRINT };
+                case State.ExpectId:
+                    return new int[] { TOKEN_ID, TOKEN_IN, TOKEN_RANGE, TOKEN_COLON, TOKEN_PRINT };
+                case State.ExpectIn:
+                    return new int[] { TOKEN_IN, TOKEN_RANGE, TOKEN_LPAREN, TOKEN_COLON, TOKEN_PRINT };
+                case State.ExpectRange:
+                    return new int[] { TOKEN_RANGE, TOKEN_LPAREN, TOKEN_NUM, TOKEN_COLON, TOKEN_PRINT };
+                case State.ExpectLParen:
+                    return new int[] { TOKEN_LPAREN, TOKEN_NUM, TOKEN_RPAREN, TOKEN_COLON, TOKEN_PRINT };
+                case State.ExpectNumber:
+                    return new int[] { TOKEN_NUM, TOKEN_RPAREN, TOKEN_COLON, TOKEN_PRINT };
+                case State.ExpectRParen:
+                    return new int[] { TOKEN_RPAREN, TOKEN_COLON, TOKEN_PRINT };
+                case State.ExpectColon:
+                    return new int[] { TOKEN_COLON, TOKEN_PRINT };
+                case State.ExpectPrint:
+                    return new int[] { TOKEN_PRINT, TOKEN_LPAREN, TOKEN_ID, TOKEN_RPAREN, TOKEN_SEMICOLON };
+                case State.ExpectLParenPrint:
+                    return new int[] { TOKEN_LPAREN, TOKEN_ID, TOKEN_RPAREN, TOKEN_SEMICOLON };
+                case State.ExpectIdPrint:
+                    return new int[] { TOKEN_ID, TOKEN_RPAREN, TOKEN_SEMICOLON };
+                case State.ExpectRParenPrint:
+                    return new int[] { TOKEN_RPAREN, TOKEN_SEMICOLON };
+                case State.ExpectSemicolon:
+                    return new int[] { TOKEN_SEMICOLON };
+                default:
+                    return new int[0];
             }
-            else
+        }
+
+        private State DetermineStateAfterRecovery(State oldState, int tokenCode)
+        {
+            switch (tokenCode)
             {
-                _errors.Add(new SyntaxError
-                {
-                    ErrorFragment = token.Value,
-                    Location = $"строка {token.Line}, позиция {token.StartPos}",
-                    Description = description,
-                    Line = token.Line,
-                    Column = token.StartPos
-                });
+                case TOKEN_FOR: return State.ExpectFor;
+                case TOKEN_ID: return (oldState == State.ExpectFor || oldState == State.ExpectId) ? State.ExpectId : State.ExpectIdPrint;
+                case TOKEN_IN: return State.ExpectIn;
+                case TOKEN_RANGE: return State.ExpectRange;
+                case TOKEN_LPAREN: return (oldState == State.ExpectLParen || oldState == State.ExpectRange) ? State.ExpectLParen : State.ExpectLParenPrint;
+                case TOKEN_NUM: return State.ExpectNumber;
+                case TOKEN_RPAREN: return (oldState == State.ExpectRParen) ? State.ExpectRParen : State.ExpectRParenPrint;
+                case TOKEN_COLON: return State.ExpectColon;
+                case TOKEN_PRINT: return State.ExpectPrint;
+                case TOKEN_SEMICOLON: return State.ExpectSemicolon;
+                default: return oldState;
             }
+        }
+
+        private void AddError(string invalidFragment, int line, int position, string expected, string found, string description)
+        {
+            if (_errors.Any(e => e.Line == line && e.Column == position && e.Description == description))
+                return;
+
+            _errors.Add(new SyntaxError
+            {
+                ErrorFragment = invalidFragment,
+                Location = $"строка {line}, позиция {position}",
+                Description = description,
+                Line = line,
+                Column = position
+            });
         }
     }
 }
