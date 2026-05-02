@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text;
 
 namespace WpfApp1
@@ -45,19 +45,17 @@ namespace WpfApp1
 
         public List<Lexem> Analyze(string text)
         {
-
             var result = new List<Lexem>();
             if (string.IsNullOrEmpty(text)) return result;
 
-            int line = 1;         
-            int pos = 1;           
-            int idx = 0;           
+            int line = 1;
+            int pos = 1;
+            int idx = 0;
             int len = text.Length;
 
             while (idx < len)
             {
                 int startPos = pos;
-
                 char ch = text[idx];
 
                 if (ch == '\n')
@@ -103,14 +101,36 @@ namespace WpfApp1
                 if (char.IsLetter(ch) || ch == '_')
                 {
                     var sb = new StringBuilder();
-                    while (idx < len && (char.IsLetterOrDigit(text[idx]) || text[idx] == '_'))
+                    bool hasInvalid = false;
+                    while (idx < len)
                     {
-                        sb.Append(text[idx]);
-                        idx++;
-                        pos++;
+                        char cur = text[idx];
+                        if (char.IsLetterOrDigit(cur) || cur == '_')
+                        {
+                            sb.Append(cur);
+                            idx++;
+                            pos++;
+                        }
+                        else if (cur == ' ' || cur == '\t' || cur == '\n' || cur == '\r' ||
+                                 GetSingleCharOperatorCode(cur) != -1 ||
+                                 (idx + 1 < len && GetTwoCharOperatorCode(text.Substring(idx, 2)) != -1))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            sb.Append(cur);
+                            hasInvalid = true;
+                            idx++;
+                            pos++;
+                        }
                     }
                     string word = sb.ToString();
-                    if (Keywords.TryGetValue(word, out int code))
+                    if (hasInvalid)
+                    {
+                        result.Add(CreateLexem(90, word, line, startPos, pos - 1, isError: true));
+                    }
+                    else if (Keywords.TryGetValue(word, out int code))
                     {
                         result.Add(CreateLexem(code, word, line, startPos, pos - 1));
                     }
@@ -143,30 +163,9 @@ namespace WpfApp1
                     continue;
                 }
 
-                var errorValue = new StringBuilder();
-                while (idx < len)
-                {
-                    char cur = text[idx];
-                    bool isValidStart = false;
-                    if (cur == ' ' || cur == '\t' || cur == '\n' || cur == '\r')
-                        isValidStart = true;
-                    else if (char.IsDigit(cur))
-                        isValidStart = true;
-                    else if (char.IsLetter(cur) || cur == '_')
-                        isValidStart = true;
-                    else if (GetSingleCharOperatorCode(cur) != -1)
-                        isValidStart = true;
-                    else if (idx + 1 < len && GetTwoCharOperatorCode(text.Substring(idx, 2)) != -1)
-                        isValidStart = true;
-
-                    if (isValidStart)
-                        break;
-
-                    errorValue.Append(cur);
-                    idx++;
-                    pos++;
-                }
-                result.Add(CreateLexem(90, errorValue.ToString(), line, startPos, pos - 1, isError: true));
+                result.Add(CreateLexem(90, ch.ToString(), line, pos, pos, isError: true));
+                idx++;
+                pos++;
             }
 
             return result;
