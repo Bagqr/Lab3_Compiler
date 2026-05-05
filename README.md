@@ -29,9 +29,9 @@
 ## Вариант задания
 Вариант номер 105: цикл for на языке Python 
 ### Примеры корректных входных строк для варианта
-1. `for i in range(5):`
-2. `for x in range(10): y = x * 2`
-3. `for item in range(3): print(item)`
+1. `for i in range(5): print (idx);`
+3. `for x in range(1010): print (smt);`
+4. `for item in range(3): print (item);`
 
 ### Перечень допустимых лексем
 | Код | Тип лексемы                     | Примеры                          |
